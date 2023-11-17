@@ -56,7 +56,7 @@ export default function Home() {
         image={unicornbikeImg} title="Unicorn Bicycle" />
       <CardContent>
         <Typography variant="body2" component="p">
-          Welcome to The Crafters Market home page.
+          Welcome to The Threads.
         </Typography>
       </CardContent>
     </Card>

@@ -27,7 +27,7 @@ const Menu = withRouter(({ history }) => (
   <AppBar position="static">
     <Toolbar>
       <Typography variant="h6" color="inherit">
-        The Crafters Market
+        Threads
       </Typography>
       <div>
         <Link to="/">
