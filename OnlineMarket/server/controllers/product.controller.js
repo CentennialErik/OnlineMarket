@@ -26,21 +26,37 @@ const getProduct = async (req, res) => {
   }
 };
 
-// POST product
+// // // POST product
+// const createProduct = async (req, res) => {
+//   const { name, description, price, quantity } = req.body;
+//   try {
+//     const newProduct = await Product.create({
+//       name,
+//       description,
+//       price,
+//       quantity,
+//     });
+//     res.status(201).json(newProduct);
+//   } catch (error) {
+//     res.status(500).json({ error: "Could not create product" });
+//   }
+// };
+
+
+//post Create product
 const createProduct = async (req, res) => {
-  const { name, description, price, quantity } = req.body;
+  console.log('Attempting to add item');
   try {
-    const newProduct = await Product.create({
-      name,
-      description,
-      price,
-      quantity,
-    });
-    res.status(201).json(newProduct);
-  } catch (error) {
-    res.status(500).json({ error: "Could not create product" });
+    const product = new Product(req.body);
+    await product.save();
+    res.json(product);
+    console.log('item added');
+  } catch (err) {
+    console.log(err)
+    res.status(500).send();
   }
 };
+
 
 // UPDATE all requests
 const updateProduct = async (req, res) => {

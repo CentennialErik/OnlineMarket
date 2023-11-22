@@ -4,16 +4,18 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
+import LogoOne from './../assets/images/greenlarge.jpg';
+
 
 
 const useStyles = makeStyles(theme => ({
   card: {
     maxWidth: 600,
     margin: 'auto',
-    marginTop: theme.spacing(5),
+    marginTop: theme.spacing(15),
   },
   title: {
-    padding: theme.spacing(3, 2.5, 2),
+    padding: theme.spacing(3, 25, 2),
     color: theme.palette.openTitle,
   },
   media: {
@@ -25,13 +27,14 @@ export default function Home() {
   const classes = useStyles()
   return (
     <Card className={classes.card}>
-
-      <Typography variant="h6" className={classes.title}>Home Page</Typography>
+      <Typography variant="h6" className={classes.title}>Placeholder text</Typography>
 
       <CardContent>
         <Typography variant="body2" component="p">
           Welcome to The Threads.
         </Typography>
+           {/* <CardMedia className={classes.media}
+        image={LogoOne}/> */}
       </CardContent>
     </Card>
   )

@@ -7,6 +7,10 @@ import HomeIcon from '@material-ui/icons/Home'
 import Button from '@material-ui/core/Button'
 import auth from './../auth/auth-helper'
 import { Link, withRouter } from 'react-router-dom'
+import Tbanner from '../assets/images/Tbanner.jpg';
+import bannerCrop from '../assets/images/bannerCropnew.png';
+import './menu.css';
+
 
 const isActive = (history, path) => {
   if (history.location.pathname == path)
@@ -20,21 +24,38 @@ const isPartActive = (history, path) => {
   else
     return { color: '#ffffff' }
 }
+
+
 const Menu = withRouter(({ history }) => (
   <AppBar position="static">
-    <Toolbar>
+    <Toolbar disableGutters>
+      <Link to="/">
+       <img src= {bannerCrop} id="banner" />
+      </Link>
+
       <Typography variant="h6" color="inherit">
         Threads
       </Typography>
+
+
       <div>
         <Link to="/">
           <IconButton aria-label="Home" style={isActive(history, "/")}>
-            <HomeIcon />
+          
+          <HomeIcon/>
           </IconButton>
         </Link>
-
-
       </div>
+
+      <div>
+        <Link to="/product">
+          <Button style={isActive(history, "/product")}> Products
+          </Button>
+         
+        </Link>
+      </div>
+  
+
       <div style={{ 'position': 'absolute', 'right': '10px' }}><span style={{ 'float': 'right' }}>
         {
           !auth.isAuthenticated() && (<span>
