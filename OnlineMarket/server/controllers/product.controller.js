@@ -11,19 +11,41 @@ const getProducts = async (req, res) => {
   }
 };
 
-// GET specific id requests
-const getProduct = async (req, res) => {
-  const productId = req.params.id;
-  try {
-    const product = await Product.findById(productId); // i might need to fix this
-    if (product) {
-      res.status(201).json(product);
-    } else {
-      res.status(500).json({ message: "Product was not found" });
+// // GET specific id requests
+// const getProduct = async (req, res) => {
+//   const productId = req.params.id;
+//   try {
+//     const product = await Product.findById(productId); // i might need to fix this -- Yeah this didnt work for searching by ID
+//     if (product) {
+//       res.status(201).json(product);
+//     } else {
+//       res.status(500).json({ message: "Product was not found" });
+//     }
+//   } catch (error) {
+//     res.status(500).json({ error: "Server could not fetch that data" });
+//   }
+// };
+
+const ProductByID = async (req, res, next, id) => { //for new productIDsearch
+    console.log('Searching for product by ID');
+    try {
+        let product = await Product.findById(id);
+      if (!product)
+            return res.status('400').json({
+                error: "Product not found",
+            });
+      req.profile = product;
+       console.log(product);
+        next();
+    } catch (err) {
+        return res.status('400').json({
+            error: "Could not retrieve Product",
+        });
     }
-  } catch (error) {
-    res.status(500).json({ error: "Server could not fetch that data" });
-  }
+};
+
+const read = (req, res) => {    // read data send to frontend
+    return res.json(req.profile);
 };
 
 // // // POST product
@@ -93,10 +115,35 @@ const deleteProduct = async (req, res) => {
   }
 };
 
+////searchs filter
+const searchProdName = async (req, res) => {
+    console.log("Searching for name that contains: ", req.query.name );
+    try {
+        let products;
+        if (req.query.name) {
+            console.log("Showing searchs that contain: ", req.query.name);
+            products = await Product.find({ name: { $regex: req.query.name } });
+            console.log(products)
+        } else {
+            console.log(req.query.name, "not found. Displaying all products")
+            products = await Product.find({});
+        }
+        res.json(products);
+    } catch (err) {
+        return res.status(400).json({
+            error: errorHandler.getErrorMessage(err),
+        });
+    }
+};
+
+
+
 export default {
-  getProduct,
+ ProductByID,
   getProducts,
   createProduct,
   updateProduct,
   deleteProduct,
+  searchProdName,
+  read,
 };

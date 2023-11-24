@@ -11,6 +11,7 @@ import productRoutes from "./routes/product.routes.js";
 const app = express();
 const CURRENT_WORKING_DIR = process.cwd();
 
+
 // route handlers
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
