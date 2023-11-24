@@ -12,16 +12,16 @@ import SearchBar from './search';
 
 
 const myApp = {
-    backgroundColor: "#15241D",
+  backgroundColor: "#15241D",
   position: 'relative',
 
 
 };
-  const myLogo = {
-    position: 'relative',
-    width: '240px',
-    height: 'auto',
-  };
+const myLogo = {
+  position: 'relative',
+  width: '240px',
+  height: 'auto',
+};
 
 const isActive = (history, path) => {
   if (history.location.pathname == path)
@@ -39,35 +39,25 @@ const isPartActive = (history, path) => {
 
 
 const Menu = withRouter(({ history }) => (
-  
+
   <AppBar style={myApp} >
-    
+
     <Toolbar >
       <Link to="/">
         <img src={logo} style={myLogo} />
       </Link>
 
-      {/* <Typography variant="h6" color="inherit">
-        Threads
-      </Typography> */}
-      {/* <div>
-        <Link to="/">
-          <IconButton aria-label="Home" style={isActive(history, "/")}>
-          <HomeIcon/>
-          </IconButton>
-        </Link>
-      </div> */}
-
       <div>
         <Link to="/product">
           <Button style={isActive(history, "/product")}> Products
           </Button>
-         
+
         </Link>
       </div>
+
       <div>
-         <SearchBar />
-          </div>
+        <SearchBar />
+      </div>
 
       <div style={{ 'position': 'absolute', 'right': '10px' }}><span style={{ 'float': 'right' }}>
         {
