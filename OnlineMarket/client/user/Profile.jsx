@@ -31,13 +31,6 @@ const useStyles = makeStyles(theme => ({
     margin: `${theme.spacing(3)}px 0 ${theme.spacing(2)}px`,
     color: theme.palette.protectedTitle
   },
-  stripe_connect: {
-    marginRight: '10px',
-  },
-  stripe_connected: {
-    verticalAlign: 'super',
-    marginRight: '10px'
-  }
 }))
 
 export default function Profile({ match }) {
@@ -108,7 +101,7 @@ export default function Profile({ match }) {
             new Date(user.created)).toDateString()} />
         </ListItem>
       </List>
-      <MyOrders />
+      {/* <MyOrders /> */}
     </Paper>
   )
 }

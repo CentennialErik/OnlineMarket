@@ -1,20 +1,23 @@
 import express from "express";
 import productCtrl from "../controllers/product.controller.js";
+
 const router = express.Router();
 
-// get all info
-router.get("/", productCtrl.getProducts);
 
-// get info by id
-router.get("/:id", productCtrl.getProduct);
+router.route("/api/product")
+    .get(productCtrl.searchProdName)
+    // .get(productCtrl.getProducts)
+    .post(productCtrl.createProduct)
 
-// create product
-router.post("/", productCtrl.createProduct);
 
-// edit specific property
-router.patch("/:id", productCtrl.updateProduct);
+    router
+    .route("/api/product/:prodID")
+        // .get(productCtrl.getProduct)
+        .get(productCtrl.read)
+    .put(productCtrl.updateProduct)
+    .delete(productCtrl.deleteProduct);
 
-// delete product
-router.delete("/:id", productCtrl.deleteProduct);
+// router.param("prodID", productCtrl.getProduct) //for new productIDsearch
+router.param("prodID", productCtrl.ProductByID)
 
 export default router;

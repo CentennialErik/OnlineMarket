@@ -7,6 +7,21 @@ import HomeIcon from '@material-ui/icons/Home'
 import Button from '@material-ui/core/Button'
 import auth from './../auth/auth-helper'
 import { Link, withRouter } from 'react-router-dom'
+import logo from '../assets/images/capture2.jpg';
+import SearchBar from './search';
+
+
+const myApp = {
+    backgroundColor: "#15241D",
+  position: 'relative',
+
+
+};
+  const myLogo = {
+    position: 'relative',
+    width: '240px',
+    height: 'auto',
+  };
 
 const isActive = (history, path) => {
   if (history.location.pathname == path)
@@ -20,21 +35,40 @@ const isPartActive = (history, path) => {
   else
     return { color: '#ffffff' }
 }
+
+
+
 const Menu = withRouter(({ history }) => (
-  <AppBar position="static">
-    <Toolbar>
-      <Typography variant="h6" color="inherit">
+  
+  <AppBar style={myApp} >
+    
+    <Toolbar >
+      <Link to="/">
+        <img src={logo} style={myLogo} />
+      </Link>
+
+      {/* <Typography variant="h6" color="inherit">
         Threads
-      </Typography>
-      <div>
+      </Typography> */}
+      {/* <div>
         <Link to="/">
           <IconButton aria-label="Home" style={isActive(history, "/")}>
-            <HomeIcon />
+          <HomeIcon/>
           </IconButton>
         </Link>
+      </div> */}
 
-
+      <div>
+        <Link to="/product">
+          <Button style={isActive(history, "/product")}> Products
+          </Button>
+         
+        </Link>
       </div>
+      <div>
+         <SearchBar />
+          </div>
+
       <div style={{ 'position': 'absolute', 'right': '10px' }}><span style={{ 'float': 'right' }}>
         {
           !auth.isAuthenticated() && (<span>

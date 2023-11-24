@@ -11,15 +11,18 @@ import productRoutes from "./routes/product.routes.js";
 const app = express();
 const CURRENT_WORKING_DIR = process.cwd();
 
+
 // route handlers
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/", userRoutes);
-app.use("/", authRoutes);
-app.use("/product", productRoutes);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use("/", userRoutes);
+app.use("/", authRoutes);
+app.use("/", productRoutes);
+
 app.use(cookieParser());
 app.use(compress());
 app.use(helmet());
