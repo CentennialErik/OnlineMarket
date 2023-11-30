@@ -10,6 +10,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import auth from './../auth/auth-helper'
 import {Redirect} from 'react-router-dom'
 import {signin} from './api-auth.js'
+import CircularProgress from '@material-ui/core/CircularPorgress';
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -43,6 +44,7 @@ export default function Signin(props) {
     email: '',
     password: '',
     error: '',
+    loading: false,
     redirectToReferrer: false
   })
 
@@ -52,16 +54,25 @@ export default function Signin(props) {
       password: values.password || undefined
     }
 
-    signin(user).then((data) => {
-      if (data.error) {
-        setValues({ ...values, error: data.error})
-      } else {
-        auth.authenticate(data, () => {
-          setValues({ ...values, error: '',redirectToReferrer: true})
-        })
-      }
-    })
-  }
+    signin(user)
+      .then((data) => {
+        if (data.error) {
+          setValues({ ...values, error: data.error, loading: false });
+        } else {
+          auth.authenticate(data, () => {
+            setValues({ ...values, error: '', redirectToReferrer: true });
+          });
+        }
+      })
+      .catch((error) => {
+        console.error('Error during sign-in:', error);
+        setValues({
+          ...values,
+          error: 'Something went wrong. Please try again.',
+          loading: false,
+        });
+      });
+  };
 
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value })
@@ -93,7 +104,13 @@ export default function Signin(props) {
           }
         </CardContent>
         <CardActions>
-        <Button color="primary" variant="contained" onClick={clickSubmit} className={classes.submit}>Submit</Button>
+        <Button color="primary" variant="contained" onClick={clickSubmit} className={classes.submit} disabled={loading}>
+          {laoding ? (
+        <CircularProgress size={24} className={classes.progress} />
+        ) : (
+        'Submit'
+        )}
+        </Button>
         </CardActions>
       </Card>
     )
