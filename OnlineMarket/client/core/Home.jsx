@@ -23,33 +23,55 @@ const useStyles = makeStyles(theme => ({
     borderRadius: '10px',
     backgroundColor: '#f0f0f0',
   },
+  loading: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '200px'.
 }));
 
+const Home = () => {
+  const classes = useStyles();
+  const [products, setProducts] = useState ([]);
+  const [loading, setLoading] = useState(true);
+  
 export default function Home() {
   const classes = useStyles();
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     // Fetch product data from an API or database
-    fetch('/api/product')
-      .then(response => response.json())
-      .then(data => setProducts(data))
-      .catch(error => console.log(error));
+    const fetchProducts = async () => {
+      try {
+        const response - await fetch('/api/product');
+        const data = await response.json();
+        setProducts(data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProducts();
   }, []);
 
   const maxCards = 3; // Set the maximum number of cards
 
   return (
     <div className={classes.showcaseContainer}>
-      {products.slice(0, maxCards).map(product => (
-        <Card key={product.id} className={classes.squareCard}>
-          <CardContent>
-            <Typography variant="h6">{product.name}</Typography>
-            <Typography variant="body2">{product.description}</Typography>
-            <Typography variant="body2">${product.price}</Typography>
-          </CardContent>
-        </Card>
-      ))}
+      {loading ? (
+        <CircularProgress />
+      ) : (
+        products.slice(0, maxCards).map(product => (
+          <Card key={product.id} className={classes.squareCard}>
+            <CardContent>
+              <Typography variant="h6">{product.name}</Typography>
+              <Typography variant="body2">{product.description}</Typography>
+              <Typography variant="body2">${product.price}</Typography>
+            </CardContent>
+          </Card>
+        ))
+      )}
     </div>
   );
-}
+};
