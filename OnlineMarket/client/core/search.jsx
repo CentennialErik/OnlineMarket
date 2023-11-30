@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 const isActive = (history, path) => {
@@ -16,6 +17,7 @@ const isActive = (history, path) => {
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [loading, setLoading] = useState(false);
   const history = useHistory(); //history hook
 
   const handleInputChange = (event) => {
@@ -24,11 +26,11 @@ const SearchBar = () => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
     try {
       const response = await axios.get('/api/product', {
         params: {
           name: searchTerm,
-
         },
       });
       console.log(response.data);
@@ -36,6 +38,8 @@ const SearchBar = () => {
       history.push(`/search?name=${encodeURIComponent(searchTerm)}`); //lists names of products
     } catch (error) {
       (error) => console.log(error)
+    } finally {
+      setLoading(false);
     }
   };
 
